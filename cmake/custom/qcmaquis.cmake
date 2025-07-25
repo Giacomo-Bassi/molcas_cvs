@@ -257,8 +257,11 @@ if (NOT MAQUIS_DMRG_FOUND) # Does the opposite work?
   # git references for QCMaquis #
   ###############################
 
-  set (reference_git_repo https://github.com/qcscine/qcmaquis.git)
-  set (reference_git_commit release-3.1.4)
+  # set (reference_git_repo https://github.com/qcscine/qcmaquis.git)
+  # set (reference_git_commit release-3.1.4)
+  set(reference_git_repo file:///home/giacomo/code/maquis-dmrg-master_core_valence_separated) # MOD
+  set(reference_git_commit "master_core_valence_separated")  # Leave empty or omit if not using Git # MOD
+
 
   set (last_hash "None")
   set (hash_file ${extprojpath}/${EP_PROJECT}.hash)
