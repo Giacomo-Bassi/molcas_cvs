@@ -68,11 +68,12 @@ C Overlap:
 
 #ifdef _DMRG_
         else
+C Changed by Giacomo Bassi: from istate and jstate to ist and jst
             sij = qcmaquis_mpssi_overlap(
      &         qcm_prefixes(job1),
-     &         istate,
+     &         ist,
      &         qcm_prefixes(job2),
-     &         jstate,
+     &         jst,
      &         .true.)
 
         end if ! DMRG or not

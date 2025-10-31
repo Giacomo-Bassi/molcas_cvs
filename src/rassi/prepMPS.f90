@@ -27,7 +27,9 @@
 ! Leon 8/12/2016 -- "real" state index across all JobIphs, needed when we read checkpoint file names
                      istatereal, &
                      job,        &
-                     ist         &
+                     ist,        &
+! Giacomo -- "sameO" is to turn off rotation of mps when same orbitals are used
+                     sameo       &
                      )
 
   ! module dependencies
@@ -64,6 +66,9 @@
   integer,intent(in)    :: nosh(nsym)
   real*8, intent(inout) :: tra(ntra)
   logical,intent(in)    :: trorb
+  ! Giacomo -- "sameO" is to turn off rotation of mps when same orbitals are used
+  logical,intent(in)    :: sameo
+
 !-------------------------------------------------------------------------------
 #ifdef _DMRG_
   integer               :: i, isym, no, ii, ista, jorb, ni
@@ -135,7 +140,9 @@
                              tmat, &
                              nash(1)**2, &
                              fac(1,1), &
-                             mspro)
+                             mspro, &
+                             sameo)
+  ! Giacomo -- "sameO" is to turn off rotation of mps when same orbitals are used
 
   if (allocated(tmat)) deallocate(tmat)
   ! call mma_deallocate(tmat)

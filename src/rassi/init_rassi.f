@@ -122,6 +122,8 @@ C DEFAULT FLAGS:
       CIH5=.FALSE.
       IFHAM=.FALSE.
       IFEJOB=.FALSE.
+C Giacomo added for manual skipping of rotation
+      SAMEO=.FALSE.
       IFSHFT=.FALSE.
       IFHDIA=.FALSE.
       IFHEXT=.FALSE.

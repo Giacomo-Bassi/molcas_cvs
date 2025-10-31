@@ -770,7 +770,8 @@ C         JOB1=JOB2, put original ci coefficients for JOB1 to h5
      &                 6,
      &                 ISTATE,
      &                 job1,
-     &                 ist
+     &                 ist,
+     &                 SAMEO
      &                )
 #endif
         end if
@@ -843,7 +844,8 @@ C           put ci coefficients for JOB2 to h5
      &                 6,
      &                 JSTATE,
      &                 job2,
-     &                 jst
+     &                 jst,
+     &                 SAMEO
      &                )
 #endif
         end if
@@ -993,6 +995,8 @@ C     Defining the Binding energy Ei-Ej
 
 C General 1-particle transition density matrix:
       IF (IF11) THEN
+C Added by Giacomo Bassi for Mpssi debug
+        write(6, *) 'Calling MKTDM1'
         CALL MKTDM1(LSYM1,MPLET1,MSPROJ1,FSBTAB1,
      &              LSYM2,MPLET2,MSPROJ2,FSBTAB2,SSTAB,
      &            OMAP,DET1,DET2,SIJ,NASHT,
@@ -1137,6 +1141,8 @@ C             Write density 1-matrices in AO basis to disk.
                 SIJ=OVERLAP_RASSI(FSBTAB1,FSBTAB2,DET1,DET2)
 #ifdef _DMRG_
               else
+C Added by Giacomo Bassi for Mpssi debug
+                write(6, *) 'Calling from gtdmctl, qcm overlap'
                 sij = qcmaquis_mpssi_overlap(
      &            qcm_prefixes(job1),
      &            ist,

@@ -412,7 +412,15 @@ C ------------------------------------------
       IF(LINE(1:4).EQ.'EJOB') THEN
         IFEJOB=.TRUE.
 !   Leon: Is it really needed?
-!        LINENR=LINENR+1
+!   Giacomo: Uncommented: LINENR=LINENR+1
+        ! LINENR=LINENR+1
+        GOTO 100
+      END IF
+C ------------------------------------------
+      IF(LINE(1:4).EQ.'EQOR') THEN
+        SAMEO=.TRUE.
+!   Giacomo: Uncommented: LINENR=LINENR+1
+        ! LINENR=LINENR+1
         GOTO 100
       END IF
 C ------------------------------------------
