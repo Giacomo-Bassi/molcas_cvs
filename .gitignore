@@ -37,3 +37,8 @@ doc/doxygen/html
 test/
 #build
 build*/
+
+
+# Added:
+cmake/custom/qcmaquis.cmake
+cmake.log
