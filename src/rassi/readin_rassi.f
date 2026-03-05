@@ -424,6 +424,13 @@ C ------------------------------------------
         GOTO 100
       END IF
 C ------------------------------------------
+      IF(LINE(1:4).EQ.'THRO') THEN
+        Read(LuIn,*,ERR=997) ths_cut
+!   Giacomo: Uncommented: LINENR=LINENR+1
+        LINENR=LINENR+1
+        GOTO 100
+      END IF
+C ------------------------------------------
       IF(LINE(1:4).EQ.'HDIA') THEN
         IFHDIA=.TRUE.
         Call mma_allocate(HDIAG,nState,Label='nState')

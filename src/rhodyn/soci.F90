@@ -73,6 +73,7 @@ if (INFO == 0) then
   call mma_deallocate(WORK)
   call mma_allocate(WORK,LWORK)
 else
+  write(u6,*) 'Crashed at soci.F90, with LAPACK zheev error:', INFO
   call abend()
 end if
 

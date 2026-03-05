@@ -34,9 +34,11 @@ complex(kind=wp), allocatable :: DET2CSF(:,:), DM0_bas(:,:), temp_dm(:)
 integer(kind=iwp), external :: isFreeUnit
 
 if ((p_style == 'SO_THERMAL') .and. (T == 0)) then
+  write(u6,*) 'WARNING!!! SO_THERMAL is requested but temperature is set to 0 !!'
   p_style = 'SO'
 end if
 if ((p_style == 'SF_THERMAL') .and. (T == 0)) then
+  write(u6,*) 'WARNING!!! SF_THERMAL is requested but temperature is set to 0 !!'
   p_style = 'SF'
 end if
 
@@ -121,12 +123,18 @@ if (flag_so) then
       DM0_bas = cZero
       if ((N_Populated > lrootstot) .or. (N_populated <= 0)) then
         call dashes()
-        write(u6,*) 'WARNING!!! Nr of the populated states',N_populated,' read from the input file is wrong'
+        write(u6,*) 'WARNING!!! Nr of the SO populated state',N_populated,' read from the input file is wrong'
         call dashes()
         call abend()
       end if
+      write(u6,*) '   - SO flag true and populating SO'
       DM0_bas(N_Populated,N_Populated) = cOne
-      call transform(DM0_bas,CSF2SO,DM0,.false.)
+      ! Giacomo introduced if condition
+      if (runmode /= 4) then
+        call transform(DM0_bas,CSF2SO,DM0,.false.)
+      else
+        DM0 = DM0_bas
+      end if
 
     case ('SO_THERMAL')
       if (ipglob > 3) then
@@ -162,7 +170,7 @@ if (flag_so) then
         DM0(:,:) = DM0_bas
       end if
     case default
-      write(u6,*) 'Population style ',p_style,' is not recognized'
+      write(u6,*) 'Not recognized population style ',p_style
       call abend()
   end select
 
@@ -212,7 +220,12 @@ else
       end if
       DM0_bas(N_Populated,N_Populated) = cOne
       ! transform DM to CSF basis by default
-      if (runmode /= 4) call transform(DM0_bas,cmplx(U_CI,kind=wp),DM0,.false.)
+      ! Giacomo MOD
+      if (runmode /= 4) then
+        call transform(DM0_bas,cmplx(U_CI,kind=wp),DM0,.false.)
+      else
+        DM0 = DM0_bas
+      end if
 
     case ('SO')
       call dashes()
@@ -246,7 +259,7 @@ else
       ! transform DM to CSF basis by default
       if (runmode /= 4) call transform(DM0_bas,cmplx(U_CI,kind=wp),DM0,.false.)
     case default
-      write(u6,*) 'Population style ',p_style,' is not recognized'
+      write(u6,*) 'Not recognized population style ',p_style
       call abend()
   end select
 end if !ifso

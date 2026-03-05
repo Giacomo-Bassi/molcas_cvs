@@ -37,6 +37,9 @@ if (runmode == 4) then
     ! reading complex Hamiltonian (already with SOC included)
     ! so far needed only for charge migration case
     ! take care of dimensions!
+
+    !  Alternative of Giacomo commented part (no Imag. Ham.)
+
     call mma_allocate(tmpr,Nstate,Nstate,label='tmpr')
     call mma_allocate(tmpi,Nstate,Nstate,label='tmpi')
     if (mh5_exists_dset(fileid,'CH_SO_REAL') .and. mh5_exists_dset(fileid,'CH_SO_IMAG')) then
@@ -58,6 +61,23 @@ if (runmode == 4) then
     do i=1,Nstate
       E_SO(i) = HSOCX(i,i)
     end do
+
+    ! ! Giacomo MOD
+    ! write(u6,*) 'Reading SO energies SOS_ENERGIES and construct H'
+    ! if (mh5_exists_dset(fileid,'SOS_ENERGIES')) then
+    !   call mma_allocate(tmpe,Nstate)
+    !   call mh5_fetch_dset(fileid,'SOS_ENERGIES',tmpe)
+    !   E_SO(:) = tmpe
+    !   call mma_deallocate(tmpe)
+    ! else
+    !   write(u6,*) 'Error in reading RASSI file, no SOS_ENERGIES'
+    !   call abend()
+    ! end if
+    ! do i=1,Nstate
+    !   HSOCX(i,i) = E_SO(i)
+    ! end do
+    ! End of Giacomo MOD
+
   else ! if flag_so is off
     write(u6,*) 'Reading SF energies SFS_ENERGIES and construct H'
     if (mh5_exists_dset(fileid,'SFS_ENERGIES')) then

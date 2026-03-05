@@ -68,7 +68,9 @@ do i=1,N
   end if
 end do
 ! determine if number of roots equal to number of CSFs
-if (lrootstot < nconftot) runmode = 4
+! Giacomo quick and dirty comment
+! if (lrootstot < nconftot) runmode = 4
+
 
 ! filling in lists of properties of states
 call mma_allocate(list_sf_states,n_sf,label='list_sf_state')
@@ -119,6 +121,7 @@ call mma_allocate(tmp,Nstate,Nstate,label='tmp')
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! start from rassf/rassi output
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  write(u6,*) '!!! Runmode: ', runmode
 if ((runmode /= 2) .and. (runmode /= 4)) then
 
   n_freq = Nstate*(Nstate-1)/2
@@ -241,6 +244,7 @@ else if (runmode == 4) then
   else
     call mma_allocate(E_SF,Nstate,label='E_SF')
   end if
+  write(u6,*) 'Run mode 4, calling get_dipole()'
   call get_dipole()
   if ((DM_basis == 'CSF_SO') .or. (DM_basis == 'SF') .or. (DM_basis == 'ALL') .or. (DM_basis == 'CSF_SF')) then
     CI = Zero
@@ -265,10 +269,14 @@ else if (runmode == 4) then
     ! this is just caution condition to make sure that CM case
     ! was tested with given DM basis
     write(u6,*) 'WARNING!!! Take care of bases in CM case'
+    write(u6,*) 'Run mode 4, read_rassisd() - Added by GIACOMO BASSI 19.02.26'
+    call read_rassisd()
+    write(u6,*) 'System exit abend() commented out - GIACOMO BASSI 17.02.26'
     call dashes()
-    call abend()
+    ! call abend()
   end if
   !call read_rassisd()
+  write(u6,*) 'Run mode 4, calling get_dm0()'
   call get_dm0()
 end if
 
@@ -302,7 +310,9 @@ if (runmode /= 3) then
   else
     !hamiltonian = HSOCX ! transform Hamiltonian to SO basis if requested
     if (flag_so .and. basis == 'SO') then
-      call transform(HSOCX,SO_CI,hamiltonian)
+      ! Giacomo commented out
+      ! call transform(HSOCX,SO_CI,hamiltonian)
+      hamiltonian(:,:) = HSOCX
     else
       hamiltonian(:,:) = HSOCX
     end if
@@ -361,20 +371,22 @@ if (runmode /= 3) then
     call propagate_sph()
   end if
 
-end if
+  ! put info for the test
+  if ((basis == 'SF')) then
+    call mma_allocate(pop_sf,Nstate,label='pop_sf')
+    pop_sf(:) = [(real(densityt(i,i)),i=1,Nstate)]
+    call Add_Info('POP_SF',pop_sf,Nstate,3)
+    call mma_deallocate(pop_sf)
+  end if
 
-! put info for the test
-if ((basis == 'SF')) then
-  call mma_allocate(pop_sf,Nstate,label='pop_sf')
-  pop_sf(:) = [(real(densityt(i,i)),i=1,Nstate)]
-  call Add_Info('POP_SF',pop_sf,Nstate,3)
-  call mma_deallocate(pop_sf)
 end if
 
 ! closing and deallocation
 call StatusLine('RhoDyn:','Close files and deallocate memory')
 
-call mh5_close_file(out_id)
+if (runmode /= 3) then
+  call mh5_close_file(out_id)
+end if
 
 ! allocated in read_input
 call mma_deallocate(ndet,safe='*')

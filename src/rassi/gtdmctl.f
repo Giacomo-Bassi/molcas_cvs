@@ -771,7 +771,8 @@ C         JOB1=JOB2, put original ci coefficients for JOB1 to h5
      &                 ISTATE,
      &                 job1,
      &                 ist,
-     &                 SAMEO
+     &                 SAMEO,
+     &                 ths_cut
      &                )
 #endif
         end if
@@ -845,7 +846,8 @@ C           put ci coefficients for JOB2 to h5
      &                 JSTATE,
      &                 job2,
      &                 jst,
-     &                 SAMEO
+     &                 SAMEO,
+     &                 ths_cut
      &                )
 #endif
         end if

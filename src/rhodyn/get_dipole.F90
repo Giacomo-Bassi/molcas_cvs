@@ -19,11 +19,12 @@ use rhodyn_data, only: a_einstein, dipole, dysamp, dysamp_bas, E_SO, emiss, flag
 use rhodyn_utils, only: transform
 use mh5, only: mh5_put_dset
 use Constants, only: Zero, cZero
-use Definitions, only: wp, iwp
+use Definitions, only: wp, iwp, u6
 
 implicit none
 integer(kind=iwp) :: i, j, k, l, ii, jj
 
+write(u6,*) '   - within get_dipole()'
 ! To put the imaginary part of diagonal elements to 0 just in case
 do j=1,lrootstot
   dipole(j,j,:) = real(dipole(j,j,:))

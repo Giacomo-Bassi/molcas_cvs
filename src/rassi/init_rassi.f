@@ -124,6 +124,7 @@ C DEFAULT FLAGS:
       IFEJOB=.FALSE.
 C Giacomo added for manual skipping of rotation
       SAMEO=.FALSE.
+      ths_cut=20
       IFSHFT=.FALSE.
       IFHDIA=.FALSE.
       IFHEXT=.FALSE.

@@ -111,6 +111,7 @@
       LOGICAL PRCI,CIH5,IFHAM,IFHEXT,IFHEFF,IFEJOB,IFHCOM
 ! Giacomo added for manual skipping of rotation
       LOGICAL SAMEO
+      INTEGER ths_cut
       LOGICAL HAVE_HEFF,HAVE_DIAG,NOHAM
       LOGICAL IFTRD1,IFTRD2,IFTDM,HOP,TRACK,ONLY_OVERLAPS
       LOGICAL IFSHFT,IFHDIA,IFSO,IFTD2,NATO,RFpert,ToFile
@@ -169,7 +170,7 @@
      &    QDPT2SC, QDPT2EV, PRDIPCOM,TDYS,OCAN,OCAA,                    &
      &    DCHS,DCHO,                                                    &
      &    PRRAW,PRWEIGHT,REDUCELOOP,                                    &
-     &    SAMEO, RHODyn
+     &    SAMEO, ths_cut, RHODyn
 
 ! Giacomo added for manual skipping of rotation
 

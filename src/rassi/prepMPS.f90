@@ -29,7 +29,8 @@
                      job,        &
                      ist,        &
 ! Giacomo -- "sameO" is to turn off rotation of mps when same orbitals are used
-                     sameo       &
+                     sameo,      &
+                     ths_cut     &
                      )
 
   ! module dependencies
@@ -68,6 +69,7 @@
   logical,intent(in)    :: trorb
   ! Giacomo -- "sameO" is to turn off rotation of mps when same orbitals are used
   logical,intent(in)    :: sameo
+  integer,intent(in)    :: ths_cut
 
 !-------------------------------------------------------------------------------
 #ifdef _DMRG_
@@ -141,7 +143,8 @@
                              nash(1)**2, &
                              fac(1,1), &
                              mspro, &
-                             sameo)
+                             sameo, &
+                             ths_cut )
   ! Giacomo -- "sameO" is to turn off rotation of mps when same orbitals are used
 
   if (allocated(tmat)) deallocate(tmat)
